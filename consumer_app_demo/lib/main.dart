@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer';
 
 void main() {
   runApp(const MainApp());
@@ -10,6 +11,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("In MainApp class Build");
     return MultiProvider(
       providers: [
         Provider(
@@ -60,6 +62,7 @@ class MatchSummary extends StatefulWidget {
 class _MatchSummaryState extends State {
   @override
   Widget build(BuildContext context) {
+    log("In MatchSummary class Build");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
@@ -107,6 +110,7 @@ class NormalClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("In Normal class Build");
     return Text("${Provider.of<Match>(context).matchNo}");
   }
 }
