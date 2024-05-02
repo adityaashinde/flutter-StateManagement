@@ -25,9 +25,7 @@ class MainApp extends StatelessWidget {
           },
         ),
       ],
-      child: const MaterialApp(
-        home: MatchSummary(),
-      ),
+      child: const MatchSummary(),
     );
   }
 }
@@ -81,11 +79,18 @@ class _MatchSummaryState extends State {
               Text("${Provider.of<Player>(context).jerNo}"),
               const SizedBox(height: 50),
 
-              // Match class
-              Text("${Provider.of<Match>(context).matchNo}"),
-              const SizedBox(height: 50),
-              Text("${Provider.of<Match>(context).runs}"),
-              const SizedBox(height: 50),
+              // Consumer
+              Consumer(builder: (context, provider, child) {
+                log("In Consumer");
+                return Column(
+                  children: [
+                    Text("${Provider.of<Match>(context).matchNo}"),
+                    const SizedBox(height: 50),
+                    Text("${Provider.of<Match>(context).runs}"),
+                    const SizedBox(height: 50),
+                  ],
+                );
+              }),
 
               // Elevated Button
               ElevatedButton(
@@ -111,6 +116,11 @@ class NormalClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log("In Normal class Build");
-    return Text("${Provider.of<Match>(context).matchNo}");
+    return Consumer(
+      builder: (context, value, child) {
+        log("In Normal class consumer");
+        return Text("${Provider.of<Match>(context).matchNo}");
+      },
+    );
   }
 }
