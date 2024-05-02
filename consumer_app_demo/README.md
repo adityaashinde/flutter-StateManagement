@@ -278,3 +278,6 @@ class NormalClass extends StatelessWidget {
 - When we use the provider before letting the Provider initialize it will throw an error.
 
 <!--  Error ScreenShot -->
+- Output :
+- ![Screenshot (399)](https://github.com/adityaashinde/flutter-StateManagement/assets/94387380/db7dac80-a784-4e24-a0d6-852f9ce7cdce)
+
