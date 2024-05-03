@@ -25,7 +25,15 @@ class MainApp extends StatelessWidget {
           },
         ),
       ],
-      child: const MatchSummary(),
+      child: MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.purpleAccent.shade400,
+            title: const Text("Provider(Consumer) Demo"),
+          ),
+          body: Text(Provider.of<Player>(context).playerName),
+        ),
+      ),
     );
   }
 }
@@ -47,80 +55,5 @@ class Match with ChangeNotifier {
     this.matchNo = matchNo;
     this.runs = runs;
     notifyListeners();
-  }
-}
-
-class MatchSummary extends StatefulWidget {
-  const MatchSummary({super.key});
-
-  @override
-  State createState() => _MatchSummaryState();
-}
-
-class _MatchSummaryState extends State {
-  @override
-  Widget build(BuildContext context) {
-    log("In MatchSummary class Build");
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.amber,
-        title: const Text("Provider(Consumer) Demo App"),
-        centerTitle: true,
-      ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Player class
-              Text(Provider.of<Player>(context).playerName),
-              const SizedBox(height: 50),
-              Text("${Provider.of<Player>(context).jerNo}"),
-              const SizedBox(height: 50),
-
-              // Consumer
-              Consumer(builder: (context, provider, child) {
-                log("In Consumer");
-                return Column(
-                  children: [
-                    Text("${Provider.of<Match>(context).matchNo}"),
-                    const SizedBox(height: 50),
-                    Text("${Provider.of<Match>(context).runs}"),
-                    const SizedBox(height: 50),
-                  ],
-                );
-              }),
-
-              // Elevated Button
-              ElevatedButton(
-                onPressed: () {
-                  Provider.of<Match>(context, listen: false)
-                      .changeData(221, 9780);
-                },
-                child: const Text("Change Data"),
-              ),
-              const SizedBox(height: 50),
-              const NormalClass(),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class NormalClass extends StatelessWidget {
-  const NormalClass({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    log("In Normal class Build");
-    return Consumer(
-      builder: (context, value, child) {
-        log("In Normal class consumer");
-        return Text("${Provider.of<Match>(context).matchNo}");
-      },
-    );
   }
 }
