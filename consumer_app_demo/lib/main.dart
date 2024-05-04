@@ -30,8 +30,20 @@ class MainApp extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.purpleAccent.shade400,
             title: const Text("Provider(Consumer) Demo"),
+            centerTitle: true,
           ),
-          body: Text(Provider.of<Player>(context).playerName),
+          body: Consumer<Match>(
+            builder: (context, value, child) {
+              log("In consumer");
+              return Center(
+                child: Text(
+                  Provider.of<Player>(context).playerName,
+                  style: const TextStyle(
+                      fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
