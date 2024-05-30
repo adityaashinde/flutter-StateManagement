@@ -45,26 +45,33 @@ class ChangeProxyDemo extends StatelessWidget {
         ChangeNotifierProxyProvider<Login, Employee>(
           create: (context) {
             return Employee(
-                empId: 11,
-                empName: "Aditya",
-                username: Provider.of<Login>(context).username,
-                password: Provider.of<Login>(context).password);
+              empId: 11,
+              empName: "Aditya",
+              username: Provider.of<Login>(context, listen: false).username,
+              password: Provider.of<Login>(context, listen: false).password,
+            );
           },
           update: (context, login, employee) {
             return Employee(
-                empId: 11,
-                empName: "empName",
-                username: "username",
-                password: "password");
+              empId: 11,
+              empName: "Aditya",
+              username: login.username,
+              password: login.password,
+            );
           },
         ),
       ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: UI_Proxy(),
+      ),
     );
   }
 }
 
-class UI extends StatefulWidget {
-  const UI({super.key});
+// ignore: camel_case_types
+class UI_Proxy extends StatefulWidget {
+  const UI_Proxy({super.key});
 
   @override
   State createState() => _UIstate();
@@ -79,13 +86,29 @@ class _UIstate extends State {
         centerTitle: true,
         backgroundColor: Colors.purple,
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text("${Provider.of<Employee>(context).empId}"),
             const SizedBox(height: 20),
+            Text(Provider.of<Employee>(context).empName),
             const SizedBox(height: 20),
+            Text(Provider.of<Login>(context).username),
             const SizedBox(height: 20),
+            Consumer<Login>(
+              builder: (context, login, child) {
+                return Text(login.password);
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Provider.of<Login>(context, listen: false)
+                    .changePassword("aditya@2000");
+              },
+              child: const Text("Change Password"),
+            ),
           ],
         ),
       ),
